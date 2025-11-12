@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,6 +6,8 @@ import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { Heart, ArrowLeft } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
 
 const OwnerLogin = () => {
   const [email, setEmail] = useState("");
@@ -13,18 +15,61 @@ const OwnerLogin = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { profile } = useAuth();
+
+  useEffect(() => {
+    if (profile?.role === "pet_owner") {
+      navigate("/owner/dashboard");
+    }
+  }, [profile, navigate]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     
-    // TODO: Implement authentication
-    toast({
-      title: "Login functionality",
-      description: "Authentication will be implemented soon!",
-    });
-    
-    setLoading(false);
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (error) throw error;
+
+      if (data.user) {
+        const { data: profileData, error: profileError } = await supabase
+          .from("profiles")
+          .select("role")
+          .eq("id", data.user.id)
+          .single();
+
+        if (profileError) throw profileError;
+
+        if (profileData.role !== "pet_owner") {
+          await supabase.auth.signOut();
+          toast({
+            title: "Access denied",
+            description: "This account is not registered as a pet owner",
+            variant: "destructive",
+          });
+          return;
+        }
+
+        toast({
+          title: "Login successful!",
+          description: "Welcome back!",
+        });
+
+        navigate("/owner/dashboard");
+      }
+    } catch (error: any) {
+      toast({
+        title: "Login failed",
+        description: error.message,
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
