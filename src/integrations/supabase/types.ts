@@ -14,7 +14,169 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      appointments: {
+        Row: {
+          appointment_date: string
+          appointment_time: string
+          created_at: string | null
+          duration_minutes: number | null
+          id: string
+          notes: string | null
+          pet_name: string
+          pet_owner_id: string
+          pet_type: string
+          reason: string
+          status: Database["public"]["Enums"]["appointment_status"] | null
+          updated_at: string | null
+          vet_id: string
+        }
+        Insert: {
+          appointment_date: string
+          appointment_time: string
+          created_at?: string | null
+          duration_minutes?: number | null
+          id?: string
+          notes?: string | null
+          pet_name: string
+          pet_owner_id: string
+          pet_type: string
+          reason: string
+          status?: Database["public"]["Enums"]["appointment_status"] | null
+          updated_at?: string | null
+          vet_id: string
+        }
+        Update: {
+          appointment_date?: string
+          appointment_time?: string
+          created_at?: string | null
+          duration_minutes?: number | null
+          id?: string
+          notes?: string | null
+          pet_name?: string
+          pet_owner_id?: string
+          pet_type?: string
+          reason?: string
+          status?: Database["public"]["Enums"]["appointment_status"] | null
+          updated_at?: string | null
+          vet_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "appointments_pet_owner_id_fkey"
+            columns: ["pet_owner_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "appointments_vet_id_fkey"
+            columns: ["vet_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      pet_owner_profiles: {
+        Row: {
+          address: string | null
+          emergency_contact: string | null
+          id: string
+        }
+        Insert: {
+          address?: string | null
+          emergency_contact?: string | null
+          id: string
+        }
+        Update: {
+          address?: string | null
+          emergency_contact?: string | null
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pet_owner_profiles_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          created_at: string | null
+          email: string
+          full_name: string
+          id: string
+          phone: string
+          role: Database["public"]["Enums"]["user_role"]
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          email: string
+          full_name: string
+          id: string
+          phone: string
+          role: Database["public"]["Enums"]["user_role"]
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          email?: string
+          full_name?: string
+          id?: string
+          phone?: string
+          role?: Database["public"]["Enums"]["user_role"]
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      vet_profiles: {
+        Row: {
+          available_days: string[] | null
+          available_hours_end: string | null
+          available_hours_start: string | null
+          clinic_address: string | null
+          clinic_name: string | null
+          id: string
+          license_number: string
+          specialization: string
+          years_of_experience: number | null
+        }
+        Insert: {
+          available_days?: string[] | null
+          available_hours_end?: string | null
+          available_hours_start?: string | null
+          clinic_address?: string | null
+          clinic_name?: string | null
+          id: string
+          license_number: string
+          specialization: string
+          years_of_experience?: number | null
+        }
+        Update: {
+          available_days?: string[] | null
+          available_hours_end?: string | null
+          available_hours_start?: string | null
+          clinic_address?: string | null
+          clinic_name?: string | null
+          id?: string
+          license_number?: string
+          specialization?: string
+          years_of_experience?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "vet_profiles_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +185,8 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      appointment_status: "pending" | "confirmed" | "completed" | "cancelled"
+      user_role: "vet" | "pet_owner"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +313,9 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      appointment_status: ["pending", "confirmed", "completed", "cancelled"],
+      user_role: ["vet", "pet_owner"],
+    },
   },
 } as const
