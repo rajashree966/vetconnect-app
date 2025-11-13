@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Calendar, Clock, User, LogOut, Phone } from "lucide-react";
+import { Calendar, Clock, User, LogOut, Phone, UserCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { format } from "date-fns";
+import ChatBot from "@/components/ChatBot";
 
 interface Appointment {
   id: string;
@@ -109,12 +110,22 @@ const VetDashboard = () => {
             <h1 className="text-2xl font-bold text-foreground">Veterinarian Dashboard</h1>
             <p className="text-muted-foreground">Welcome, Dr. {profile?.full_name}</p>
           </div>
-          <Button variant="outline" onClick={signOut}>
-            <LogOut className="w-4 h-4 mr-2" />
-            Sign Out
-          </Button>
+          <div className="flex items-center gap-4">
+            <Button asChild variant="outline">
+              <Link to="/vet/profile">
+                <UserCircle className="w-4 h-4 mr-2" />
+                Profile
+              </Link>
+            </Button>
+            <Button variant="outline" onClick={signOut}>
+              <LogOut className="w-4 h-4 mr-2" />
+              Sign Out
+            </Button>
+          </div>
         </div>
       </header>
+      
+      <ChatBot />
 
       <main className="container mx-auto px-4 py-8">
         <div className="grid gap-6 md:grid-cols-3 mb-8">

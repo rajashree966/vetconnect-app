@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Stethoscope, Heart, Calendar, Shield, Phone, MessageSquare } from "lucide-react";
+import ChatBot from "@/components/ChatBot";
 
 const Index = () => {
   return (
@@ -107,6 +108,8 @@ const Index = () => {
           <p>&copy; 2024 AskYourVet. Caring for pets, supporting vets.</p>
         </div>
       </footer>
+      
+      <ChatBot />
     </div>
   );
 };

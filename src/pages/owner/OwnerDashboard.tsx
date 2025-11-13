@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -9,9 +9,10 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Calendar, Clock, User, LogOut, Plus, Stethoscope } from "lucide-react";
+import { Calendar, Clock, User, LogOut, Plus, Stethoscope, UserCircle, PawPrint, FileText, BookOpen } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { format } from "date-fns";
+import ChatBot from "@/components/ChatBot";
 
 interface Vet {
   id: string;
@@ -158,14 +159,51 @@ const OwnerDashboard = () => {
             <h1 className="text-2xl font-bold text-foreground">Pet Owner Dashboard</h1>
             <p className="text-muted-foreground">Welcome, {profile?.full_name}</p>
           </div>
-          <Button variant="outline" onClick={signOut}>
-            <LogOut className="w-4 h-4 mr-2" />
-            Sign Out
-          </Button>
+          <div className="flex items-center gap-4">
+            <Button asChild variant="outline">
+              <Link to="/owner/profile">
+                <UserCircle className="w-4 h-4 mr-2" />
+                Profile
+              </Link>
+            </Button>
+            <Button variant="outline" onClick={signOut}>
+              <LogOut className="w-4 h-4 mr-2" />
+              Sign Out
+            </Button>
+          </div>
         </div>
       </header>
+      
+      <ChatBot />
 
       <main className="container mx-auto px-4 py-8">
+        {/* Quick Links */}
+        <div className="grid md:grid-cols-4 gap-4 mb-8">
+          <Button asChild variant="outline" className="h-24 flex-col gap-2">
+            <Link to="/owner/pet-profile">
+              <PawPrint className="w-6 h-6" />
+              <span>Pet Profile</span>
+            </Link>
+          </Button>
+          <Button asChild variant="outline" className="h-24 flex-col gap-2">
+            <Link to="/owner/health-records">
+              <FileText className="w-6 h-6" />
+              <span>Health Records</span>
+            </Link>
+          </Button>
+          <Button asChild variant="outline" className="h-24 flex-col gap-2">
+            <Link to="/owner/resources">
+              <BookOpen className="w-6 h-6" />
+              <span>Resources</span>
+            </Link>
+          </Button>
+          <Button asChild variant="outline" className="h-24 flex-col gap-2">
+            <Link to="/owner/dashboard">
+              <Calendar className="w-6 h-6" />
+              <span>Calendar</span>
+            </Link>
+          </Button>
+        </div>
         <div className="grid gap-6 md:grid-cols-3 mb-8">
           <Card className="p-6">
             <div className="flex items-center gap-4">
