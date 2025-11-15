@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Calendar, Clock, User, LogOut, Plus, Stethoscope, UserCircle, PawPrint, FileText, BookOpen } from "lucide-react";
+import { Calendar, Clock, User, LogOut, Plus, Stethoscope, UserCircle, PawPrint, FileText, BookOpen, TrendingUp, Syringe, Video } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { format } from "date-fns";
 import ChatBot from "@/components/ChatBot";
@@ -178,7 +178,7 @@ const OwnerDashboard = () => {
 
       <main className="container mx-auto px-4 py-8">
         {/* Quick Links */}
-        <div className="grid md:grid-cols-4 gap-4 mb-8">
+        <div className="grid md:grid-cols-4 lg:grid-cols-7 gap-4 mb-8">
           <Button asChild variant="outline" className="h-24 flex-col gap-2">
             <Link to="/owner/pet-profile">
               <PawPrint className="w-6 h-6" />
@@ -189,6 +189,24 @@ const OwnerDashboard = () => {
             <Link to="/owner/health-records">
               <FileText className="w-6 h-6" />
               <span>Health Records</span>
+            </Link>
+          </Button>
+          <Button asChild variant="outline" className="h-24 flex-col gap-2">
+            <Link to="/owner/health-statistics">
+              <TrendingUp className="w-6 h-6" />
+              <span>Statistics</span>
+            </Link>
+          </Button>
+          <Button asChild variant="outline" className="h-24 flex-col gap-2">
+            <Link to="/owner/vaccination-schedule">
+              <Syringe className="w-6 h-6" />
+              <span>Vaccinations</span>
+            </Link>
+          </Button>
+          <Button asChild variant="outline" className="h-24 flex-col gap-2">
+            <Link to="/owner/consultation-videos">
+              <Video className="w-6 h-6" />
+              <span>Videos</span>
             </Link>
           </Button>
           <Button asChild variant="outline" className="h-24 flex-col gap-2">
