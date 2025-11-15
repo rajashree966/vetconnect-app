@@ -8,8 +8,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowLeft, FileText, Plus, Trash2, Calendar as CalendarIcon } from "lucide-react";
+import { ArrowLeft, FileText, Plus, Trash2, Calendar as CalendarIcon, Download } from "lucide-react";
 import MedicalTimeline from "@/components/MedicalTimeline";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 
 interface HealthRecord {
   id: string;
@@ -79,6 +81,60 @@ const HealthRecords = () => {
     });
   };
 
+  const handleExportPDF = () => {
+    const doc = new jsPDF();
+    
+    // Add title
+    doc.setFontSize(20);
+    doc.text("Pet Medical History", 14, 22);
+    
+    // Add generation date
+    doc.setFontSize(10);
+    doc.text(`Generated on: ${new Date().toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    })}`, 14, 30);
+    
+    // Prepare table data
+    const tableData = records
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .map(record => [
+        new Date(record.date).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric'
+        }),
+        record.type.charAt(0).toUpperCase() + record.type.slice(1),
+        record.veterinarian || 'N/A',
+        record.description
+      ]);
+    
+    // Add table
+    autoTable(doc, {
+      startY: 35,
+      head: [['Date', 'Type', 'Veterinarian', 'Description']],
+      body: tableData,
+      theme: 'striped',
+      headStyles: { fillColor: [59, 130, 246] },
+      styles: { fontSize: 9 },
+      columnStyles: {
+        0: { cellWidth: 30 },
+        1: { cellWidth: 25 },
+        2: { cellWidth: 35 },
+        3: { cellWidth: 'auto' }
+      }
+    });
+    
+    // Save the PDF
+    doc.save(`pet-medical-history-${new Date().toISOString().split('T')[0]}.pdf`);
+    
+    toast({
+      title: "Success",
+      description: "Medical history exported to PDF",
+    });
+  };
+
   return (
     <div className="min-h-screen bg-gradient-hero p-6">
       <div className="max-w-6xl mx-auto">
@@ -106,9 +162,17 @@ const HealthRecords = () => {
           {/* Timeline View */}
           <TabsContent value="timeline">
             <div className="max-w-4xl mx-auto">
-              <div className="flex items-center gap-3 mb-8">
-                <FileText className="w-8 h-8 text-primary" />
-                <h2 className="text-2xl font-bold text-foreground">Medical History Timeline</h2>
+              <div className="flex items-center justify-between mb-8">
+                <div className="flex items-center gap-3">
+                  <FileText className="w-8 h-8 text-primary" />
+                  <h2 className="text-2xl font-bold text-foreground">Medical History Timeline</h2>
+                </div>
+                {records.length > 0 && (
+                  <Button onClick={handleExportPDF} variant="outline">
+                    <Download className="w-4 h-4 mr-2" />
+                    Export PDF
+                  </Button>
+                )}
               </div>
               
               <MedicalTimeline 
