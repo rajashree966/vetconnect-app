@@ -77,21 +77,114 @@ export type Database = {
           },
         ]
       }
+      consultation_videos: {
+        Row: {
+          appointment_id: string | null
+          created_at: string
+          description: string | null
+          id: string
+          pet_owner_id: string
+          thumbnail_url: string | null
+          title: string
+          updated_at: string
+          vet_id: string
+          video_url: string
+        }
+        Insert: {
+          appointment_id?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          pet_owner_id: string
+          thumbnail_url?: string | null
+          title: string
+          updated_at?: string
+          vet_id: string
+          video_url: string
+        }
+        Update: {
+          appointment_id?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          pet_owner_id?: string
+          thumbnail_url?: string | null
+          title?: string
+          updated_at?: string
+          vet_id?: string
+          video_url?: string
+        }
+        Relationships: []
+      }
+      medical_records: {
+        Row: {
+          created_at: string
+          date: string
+          description: string | null
+          file_urls: string[] | null
+          id: string
+          pet_name: string
+          pet_owner_id: string
+          title: string
+          type: string
+          updated_at: string
+          veterinarian: string | null
+        }
+        Insert: {
+          created_at?: string
+          date: string
+          description?: string | null
+          file_urls?: string[] | null
+          id?: string
+          pet_name: string
+          pet_owner_id: string
+          title: string
+          type: string
+          updated_at?: string
+          veterinarian?: string | null
+        }
+        Update: {
+          created_at?: string
+          date?: string
+          description?: string | null
+          file_urls?: string[] | null
+          id?: string
+          pet_name?: string
+          pet_owner_id?: string
+          title?: string
+          type?: string
+          updated_at?: string
+          veterinarian?: string | null
+        }
+        Relationships: []
+      }
       pet_owner_profiles: {
         Row: {
           address: string | null
           emergency_contact: string | null
+          emergency_contact_name: string | null
+          emergency_contact_phone: string | null
+          emergency_contact_relationship: string | null
           id: string
+          preferred_contact_method: string | null
         }
         Insert: {
           address?: string | null
           emergency_contact?: string | null
+          emergency_contact_name?: string | null
+          emergency_contact_phone?: string | null
+          emergency_contact_relationship?: string | null
           id: string
+          preferred_contact_method?: string | null
         }
         Update: {
           address?: string | null
           emergency_contact?: string | null
+          emergency_contact_name?: string | null
+          emergency_contact_phone?: string | null
+          emergency_contact_relationship?: string | null
           id?: string
+          preferred_contact_method?: string | null
         }
         Relationships: [
           {
@@ -107,8 +200,10 @@ export type Database = {
         Row: {
           created_at: string | null
           email: string
+          facebook_profile: string | null
           full_name: string
           id: string
+          instagram_handle: string | null
           phone: string
           role: Database["public"]["Enums"]["user_role"]
           updated_at: string | null
@@ -116,8 +211,10 @@ export type Database = {
         Insert: {
           created_at?: string | null
           email: string
+          facebook_profile?: string | null
           full_name: string
           id: string
+          instagram_handle?: string | null
           phone: string
           role: Database["public"]["Enums"]["user_role"]
           updated_at?: string | null
@@ -125,11 +222,52 @@ export type Database = {
         Update: {
           created_at?: string | null
           email?: string
+          facebook_profile?: string | null
           full_name?: string
           id?: string
+          instagram_handle?: string | null
           phone?: string
           role?: Database["public"]["Enums"]["user_role"]
           updated_at?: string | null
+        }
+        Relationships: []
+      }
+      vaccination_schedule: {
+        Row: {
+          created_at: string
+          due_date: string
+          id: string
+          notes: string | null
+          pet_name: string
+          pet_owner_id: string
+          reminder_sent: boolean | null
+          status: string
+          updated_at: string
+          vaccine_name: string
+        }
+        Insert: {
+          created_at?: string
+          due_date: string
+          id?: string
+          notes?: string | null
+          pet_name: string
+          pet_owner_id: string
+          reminder_sent?: boolean | null
+          status?: string
+          updated_at?: string
+          vaccine_name: string
+        }
+        Update: {
+          created_at?: string
+          due_date?: string
+          id?: string
+          notes?: string | null
+          pet_name?: string
+          pet_owner_id?: string
+          reminder_sent?: boolean | null
+          status?: string
+          updated_at?: string
+          vaccine_name?: string
         }
         Relationships: []
       }

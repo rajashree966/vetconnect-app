@@ -4,7 +4,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Calendar, Clock, User, LogOut, Phone, UserCircle } from "lucide-react";
+import { Calendar, Clock, User, LogOut, Phone, UserCircle, Video } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { format } from "date-fns";
 import ChatBot from "@/components/ChatBot";
@@ -128,6 +128,22 @@ const VetDashboard = () => {
       <ChatBot />
 
       <main className="container mx-auto px-4 py-8">
+        {/* Quick Links */}
+        <div className="grid md:grid-cols-2 gap-4 mb-8">
+          <Button asChild variant="outline" className="h-24 flex-col gap-2">
+            <Link to="/vet/profile">
+              <UserCircle className="w-6 h-6" />
+              <span>My Profile</span>
+            </Link>
+          </Button>
+          <Button asChild variant="outline" className="h-24 flex-col gap-2">
+            <Link to="/vet/consultation-videos">
+              <Video className="w-6 h-6" />
+              <span>Upload Videos</span>
+            </Link>
+          </Button>
+        </div>
+
         <div className="grid gap-6 md:grid-cols-3 mb-8">
           <Card className="p-6">
             <div className="flex items-center gap-4">
