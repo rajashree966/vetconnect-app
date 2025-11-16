@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Calendar, Clock, User, LogOut, Plus, Stethoscope, UserCircle, PawPrint, FileText, BookOpen, TrendingUp, Syringe, Video } from "lucide-react";
+import { Calendar, Clock, User, LogOut, Plus, Stethoscope, UserCircle, PawPrint, FileText, BookOpen, TrendingUp, Syringe, Video, Pill } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { format } from "date-fns";
 import ChatBot from "@/components/ChatBot";
@@ -178,7 +178,7 @@ const OwnerDashboard = () => {
 
       <main className="container mx-auto px-4 py-8">
         {/* Quick Links */}
-        <div className="grid md:grid-cols-4 lg:grid-cols-7 gap-4 mb-8">
+        <div className="grid md:grid-cols-4 lg:grid-cols-8 gap-4 mb-8">
           <Button asChild variant="outline" className="h-24 flex-col gap-2">
             <Link to="/owner/pet-profile">
               <PawPrint className="w-6 h-6" />
@@ -210,15 +210,21 @@ const OwnerDashboard = () => {
             </Link>
           </Button>
           <Button asChild variant="outline" className="h-24 flex-col gap-2">
+            <Link to="/owner/prescriptions">
+              <Pill className="w-6 h-6" />
+              <span>Prescriptions</span>
+            </Link>
+          </Button>
+          <Button asChild variant="outline" className="h-24 flex-col gap-2">
             <Link to="/owner/resources">
               <BookOpen className="w-6 h-6" />
               <span>Resources</span>
             </Link>
           </Button>
           <Button asChild variant="outline" className="h-24 flex-col gap-2">
-            <Link to="/owner/dashboard">
+            <Link to="/contact">
               <Calendar className="w-6 h-6" />
-              <span>Calendar</span>
+              <span>Contact</span>
             </Link>
           </Button>
         </div>
