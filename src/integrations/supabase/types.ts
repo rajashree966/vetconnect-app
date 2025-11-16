@@ -18,10 +18,14 @@ export type Database = {
         Row: {
           appointment_date: string
           appointment_time: string
+          consultation_type: string | null
           created_at: string | null
           duration_minutes: number | null
           id: string
           notes: string | null
+          payment_amount: number | null
+          payment_id: string | null
+          payment_status: string | null
           pet_name: string
           pet_owner_id: string
           pet_type: string
@@ -33,10 +37,14 @@ export type Database = {
         Insert: {
           appointment_date: string
           appointment_time: string
+          consultation_type?: string | null
           created_at?: string | null
           duration_minutes?: number | null
           id?: string
           notes?: string | null
+          payment_amount?: number | null
+          payment_id?: string | null
+          payment_status?: string | null
           pet_name: string
           pet_owner_id: string
           pet_type: string
@@ -48,10 +56,14 @@ export type Database = {
         Update: {
           appointment_date?: string
           appointment_time?: string
+          consultation_type?: string | null
           created_at?: string | null
           duration_minutes?: number | null
           id?: string
           notes?: string | null
+          payment_amount?: number | null
+          payment_id?: string | null
+          payment_status?: string | null
           pet_name?: string
           pet_owner_id?: string
           pet_type?: string
@@ -158,6 +170,44 @@ export type Database = {
         }
         Relationships: []
       }
+      messages: {
+        Row: {
+          appointment_id: string | null
+          content: string
+          created_at: string
+          id: string
+          read: boolean
+          receiver_id: string
+          sender_id: string
+        }
+        Insert: {
+          appointment_id?: string | null
+          content: string
+          created_at?: string
+          id?: string
+          read?: boolean
+          receiver_id: string
+          sender_id: string
+        }
+        Update: {
+          appointment_id?: string | null
+          content?: string
+          created_at?: string
+          id?: string
+          read?: boolean
+          receiver_id?: string
+          sender_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "messages_appointment_id_fkey"
+            columns: ["appointment_id"]
+            isOneToOne: false
+            referencedRelation: "appointments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       pet_owner_profiles: {
         Row: {
           address: string | null
@@ -192,6 +242,71 @@ export type Database = {
             columns: ["id"]
             isOneToOne: true
             referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      prescriptions: {
+        Row: {
+          appointment_id: string | null
+          created_at: string
+          diagnosis: string | null
+          dosage: string
+          duration: string
+          frequency: string
+          id: string
+          instructions: string | null
+          issued_date: string
+          medication_name: string
+          notes: string | null
+          pet_name: string
+          pet_owner_id: string
+          status: string
+          updated_at: string
+          vet_id: string
+        }
+        Insert: {
+          appointment_id?: string | null
+          created_at?: string
+          diagnosis?: string | null
+          dosage: string
+          duration: string
+          frequency: string
+          id?: string
+          instructions?: string | null
+          issued_date?: string
+          medication_name: string
+          notes?: string | null
+          pet_name: string
+          pet_owner_id: string
+          status?: string
+          updated_at?: string
+          vet_id: string
+        }
+        Update: {
+          appointment_id?: string | null
+          created_at?: string
+          diagnosis?: string | null
+          dosage?: string
+          duration?: string
+          frequency?: string
+          id?: string
+          instructions?: string | null
+          issued_date?: string
+          medication_name?: string
+          notes?: string | null
+          pet_name?: string
+          pet_owner_id?: string
+          status?: string
+          updated_at?: string
+          vet_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "prescriptions_appointment_id_fkey"
+            columns: ["appointment_id"]
+            isOneToOne: false
+            referencedRelation: "appointments"
             referencedColumns: ["id"]
           },
         ]
