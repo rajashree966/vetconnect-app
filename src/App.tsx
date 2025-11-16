@@ -22,6 +22,9 @@ import HealthStatistics from "./pages/owner/HealthStatistics";
 import VaccinationSchedule from "./pages/owner/VaccinationSchedule";
 import ConsultationVideosOwner from "./pages/owner/ConsultationVideos";
 import Resources from "./pages/owner/Resources";
+import PrescriptionsOwner from "./pages/owner/Prescriptions";
+import PrescriptionsVet from "./pages/vet/Prescriptions";
+import Contact from "./pages/Contact";
 import ChatBot from "./components/ChatBot";
 
 const queryClient = new QueryClient();
@@ -41,6 +44,7 @@ const App = () => (
             <Route path="/vet/dashboard" element={<VetDashboard />} />
             <Route path="/vet/profile" element={<VetProfile />} />
             <Route path="/vet/consultation-videos" element={<ConsultationVideosVet />} />
+            <Route path="/vet/prescriptions" element={<PrescriptionsVet />} />
             <Route path="/owner/login" element={<OwnerLogin />} />
             <Route path="/owner/register" element={<OwnerRegister />} />
             <Route path="/owner/dashboard" element={<OwnerDashboard />} />
@@ -51,6 +55,8 @@ const App = () => (
             <Route path="/owner/vaccination-schedule" element={<VaccinationSchedule />} />
             <Route path="/owner/consultation-videos" element={<ConsultationVideosOwner />} />
             <Route path="/owner/resources" element={<Resources />} />
+            <Route path="/owner/prescriptions" element={<PrescriptionsOwner />} />
+            <Route path="/contact" element={<Contact />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
           <ChatBot />
