@@ -8,6 +8,7 @@ import { Calendar, Clock, User, LogOut, Phone, UserCircle, Video, FileText } fro
 import { useToast } from "@/hooks/use-toast";
 import { format } from "date-fns";
 import ChatBot from "@/components/ChatBot";
+import AppointmentCalendar from "@/components/AppointmentCalendar";
 
 interface Appointment {
   id: string;
@@ -18,6 +19,8 @@ interface Appointment {
   reason: string;
   status: string;
   pet_owner_id: string;
+  consultation_type?: string;
+  owner_name?: string;
   profiles: {
     full_name: string;
     phone: string;
@@ -54,7 +57,11 @@ const VetDashboard = () => {
         .order("appointment_time", { ascending: true });
 
       if (error) throw error;
-      setAppointments(data || []);
+      const appointmentsWithOwner = (data || []).map(apt => ({
+        ...apt,
+        owner_name: apt.profiles?.full_name
+      }));
+      setAppointments(appointmentsWithOwner);
     } catch (error: any) {
       toast({
         title: "Error",
@@ -190,13 +197,16 @@ const VetDashboard = () => {
           </Card>
         </div>
 
-        <Card className="p-6">
-          <h2 className="text-xl font-bold text-foreground mb-6">Appointments</h2>
-          
-          {appointments.length === 0 ? (
-            <p className="text-center text-muted-foreground py-8">No appointments scheduled yet</p>
-          ) : (
-            <div className="space-y-4">
+        <div className="space-y-6">
+          <AppointmentCalendar appointments={appointments} userRole="vet" />
+
+          <Card className="p-6">
+            <h2 className="text-xl font-bold text-foreground mb-6">Appointments</h2>
+            
+            {appointments.length === 0 ? (
+              <p className="text-center text-muted-foreground py-8">No appointments scheduled yet</p>
+            ) : (
+              <div className="space-y-4">
               {appointments.map((appointment) => (
                 <Card key={appointment.id} className="p-4 border-2 hover:border-primary transition-colors">
                   <div className="flex items-start justify-between">
@@ -274,7 +284,8 @@ const VetDashboard = () => {
               ))}
             </div>
           )}
-        </Card>
+          </Card>
+        </div>
       </main>
     </div>
   );

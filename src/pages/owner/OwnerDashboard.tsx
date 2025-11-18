@@ -13,6 +13,7 @@ import { Calendar, Clock, User, LogOut, Plus, Stethoscope, UserCircle, PawPrint,
 import { useToast } from "@/hooks/use-toast";
 import { format } from "date-fns";
 import ChatBot from "@/components/ChatBot";
+import AppointmentCalendar from "@/components/AppointmentCalendar";
 
 interface Vet {
   id: string;
@@ -31,6 +32,8 @@ interface Appointment {
   pet_type: string;
   reason: string;
   status: string;
+  consultation_type?: string;
+  vet_name?: string;
   profiles: {
     full_name: string;
   };
@@ -89,7 +92,11 @@ const OwnerDashboard = () => {
       if (appointmentsResult.error) throw appointmentsResult.error;
       if (vetsResult.error) throw vetsResult.error;
 
-      setAppointments(appointmentsResult.data || []);
+      const appointmentsWithVet = (appointmentsResult.data || []).map(apt => ({
+        ...apt,
+        vet_name: apt.profiles?.full_name
+      }));
+      setAppointments(appointmentsWithVet);
       setVets(vetsResult.data || []);
     } catch (error: any) {
       toast({
@@ -368,11 +375,14 @@ const OwnerDashboard = () => {
           </Dialog>
         </div>
 
-        <Card className="p-6">
-          {appointments.length === 0 ? (
-            <p className="text-center text-muted-foreground py-8">No appointments yet. Book your first appointment!</p>
-          ) : (
-            <div className="space-y-4">
+        <div className="space-y-6">
+          <AppointmentCalendar appointments={appointments} userRole="pet_owner" />
+
+          <Card className="p-6">
+            {appointments.length === 0 ? (
+              <p className="text-center text-muted-foreground py-8">No appointments yet. Book your first appointment!</p>
+            ) : (
+              <div className="space-y-4">
               {appointments.map((appointment) => (
                 <Card key={appointment.id} className="p-4 border-2">
                   <div className="flex items-start justify-between">
@@ -417,7 +427,8 @@ const OwnerDashboard = () => {
               ))}
             </div>
           )}
-        </Card>
+          </Card>
+        </div>
       </main>
     </div>
   );
