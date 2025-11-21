@@ -24,6 +24,7 @@ import ConsultationVideosOwner from "./pages/owner/ConsultationVideos";
 import Resources from "./pages/owner/Resources";
 import PrescriptionsOwner from "./pages/owner/Prescriptions";
 import PrescriptionsVet from "./pages/vet/Prescriptions";
+import NotificationPreferences from "./pages/owner/NotificationPreferences";
 import Contact from "./pages/Contact";
 import ChatBot from "./components/ChatBot";
 
@@ -56,6 +57,7 @@ const App = () => (
             <Route path="/owner/consultation-videos" element={<ConsultationVideosOwner />} />
             <Route path="/owner/resources" element={<Resources />} />
             <Route path="/owner/prescriptions" element={<PrescriptionsOwner />} />
+            <Route path="/owner/notification-preferences" element={<NotificationPreferences />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
