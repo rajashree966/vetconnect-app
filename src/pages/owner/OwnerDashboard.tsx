@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Calendar, Clock, User, LogOut, Plus, Stethoscope, UserCircle, PawPrint, FileText, BookOpen, TrendingUp, Syringe, Video, Pill } from "lucide-react";
+import { Calendar, Clock, User, LogOut, Plus, Stethoscope, UserCircle, PawPrint, FileText, BookOpen, TrendingUp, Syringe, Video, Pill, Bell } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { format } from "date-fns";
 import ChatBot from "@/components/ChatBot";
@@ -226,6 +226,12 @@ const OwnerDashboard = () => {
             <Link to="/owner/resources">
               <BookOpen className="w-6 h-6" />
               <span>Resources</span>
+            </Link>
+          </Button>
+          <Button asChild variant="outline" className="h-24 flex-col gap-2">
+            <Link to="/owner/notification-preferences">
+              <Bell className="w-6 h-6" />
+              <span>Notifications</span>
             </Link>
           </Button>
           <Button asChild variant="outline" className="h-24 flex-col gap-2">
