@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowLeft, Bell } from "lucide-react";
+import { ArrowLeft, Bell, Send } from "lucide-react";
 
 export default function NotificationPreferences() {
   const { user, profile } = useAuth();
@@ -16,6 +16,7 @@ export default function NotificationPreferences() {
   const [preferredMethod, setPreferredMethod] = useState<string>("phone");
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [testing, setTesting] = useState(false);
 
   useEffect(() => {
     if (!user || profile?.role !== "pet_owner") {
@@ -68,6 +69,42 @@ export default function NotificationPreferences() {
       });
     } finally {
       setSaving(false);
+    }
+  };
+
+  const handleTestNotification = async () => {
+    setTesting(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('send-test-notification', {
+        body: {
+          userId: user?.id,
+          preferredMethod: preferredMethod
+        }
+      });
+
+      if (error) throw error;
+
+      if (data?.success) {
+        toast({
+          title: "Test Notification Sent! 🎉",
+          description: data.message,
+        });
+      } else {
+        toast({
+          title: "Test Failed",
+          description: data?.message || "Failed to send test notification.",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      console.error("Error sending test notification:", error);
+      toast({
+        title: "Error",
+        description: "Failed to send test notification. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setTesting(false);
     }
   };
 
@@ -139,7 +176,7 @@ export default function NotificationPreferences() {
               </RadioGroup>
             </div>
 
-            <div className="pt-4">
+            <div className="pt-4 space-y-3">
               <Button 
                 onClick={handleSave} 
                 disabled={saving}
@@ -147,6 +184,24 @@ export default function NotificationPreferences() {
               >
                 {saving ? "Saving..." : "Save Preferences"}
               </Button>
+              
+              <Button 
+                onClick={handleTestNotification} 
+                disabled={testing || !preferredMethod}
+                variant="outline"
+                className="w-full"
+              >
+                <Send className="mr-2 h-4 w-4" />
+                {testing ? "Sending Test..." : "Send Test Notification"}
+              </Button>
+            </div>
+
+            <div className="text-sm text-muted-foreground bg-muted/50 p-4 rounded-lg">
+              <p className="font-medium mb-2">Test Your Notifications:</p>
+              <p className="mb-2">
+                Click "Send Test Notification" to verify your contact preferences are working correctly. 
+                You'll receive a test message via your selected method(s).
+              </p>
             </div>
 
             <div className="text-sm text-muted-foreground bg-muted/50 p-4 rounded-lg">
