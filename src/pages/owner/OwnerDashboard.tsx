@@ -52,6 +52,7 @@ const OwnerDashboard = () => {
     appointmentDate: "",
     appointmentTime: "",
     reason: "",
+    consultationType: "general",
   });
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -121,6 +122,7 @@ const OwnerDashboard = () => {
         pet_name: formData.petName,
         pet_type: formData.petType,
         reason: formData.reason,
+        consultation_type: formData.consultationType,
         status: "pending",
       });
 
@@ -139,6 +141,7 @@ const OwnerDashboard = () => {
         appointmentDate: "",
         appointmentTime: "",
         reason: "",
+        consultationType: "general",
       });
       fetchData();
     } catch (error: any) {
@@ -361,6 +364,25 @@ const OwnerDashboard = () => {
                       required
                     />
                   </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label>Consultation Type *</Label>
+                  <Select value={formData.consultationType} onValueChange={(value) => setFormData({...formData, consultationType: value})} required>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="general">General Checkup</SelectItem>
+                      <SelectItem value="vaccination">Vaccination</SelectItem>
+                      <SelectItem value="surgery">Surgery</SelectItem>
+                      <SelectItem value="dental">Dental Care</SelectItem>
+                      <SelectItem value="emergency">Emergency</SelectItem>
+                      <SelectItem value="sports_training">Sports Training</SelectItem>
+                      <SelectItem value="agility_training">Agility Training</SelectItem>
+                      <SelectItem value="behavior_training">Behavior Training</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
 
                 <div className="space-y-2">

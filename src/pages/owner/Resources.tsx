@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ArrowLeft, BookOpen, Heart, Activity, Utensils, Brain, Shield } from "lucide-react";
+import { ArrowLeft, BookOpen, Heart, Activity, Utensils, Brain, Shield, Trophy, Dumbbell, Timer } from "lucide-react";
 
 const Resources = () => {
   const navigate = useNavigate();
@@ -72,6 +72,45 @@ const Resources = () => {
         "Senior Pet Care",
         "End of Life Considerations"
       ]
+    },
+    {
+      icon: Trophy,
+      title: "Pet Sports & Competitions",
+      description: "Introduction to dog sports, agility competitions, and performance events for your athletic pets.",
+      articles: [
+        "Getting Started with Dog Sports",
+        "Agility Training Fundamentals",
+        "Flyball: Speed & Teamwork",
+        "Disc Dog & Frisbee Sports",
+        "Dock Diving Competitions",
+        "Herding Trials for Working Dogs"
+      ]
+    },
+    {
+      icon: Dumbbell,
+      title: "Athletic Training",
+      description: "Build your pet's strength, endurance, and agility with proper training techniques.",
+      articles: [
+        "Building Canine Fitness",
+        "Warm-up & Cool-down Exercises",
+        "Strength Training for Dogs",
+        "Endurance Building Activities",
+        "Balance & Coordination Drills",
+        "Recovery & Rest Days"
+      ]
+    },
+    {
+      icon: Timer,
+      title: "Agility & Speed Training",
+      description: "Professional techniques to improve your pet's speed, reflexes, and obstacle navigation.",
+      articles: [
+        "Setting Up Home Agility Course",
+        "Jump Training Techniques",
+        "Tunnel & Weave Pole Training",
+        "Contact Obstacle Safety",
+        "Speed Drills & Timing",
+        "Competition Preparation"
+      ]
     }
   ];
 
@@ -125,13 +164,27 @@ const Resources = () => {
         </div>
 
         <Card className="mt-8 p-6 bg-gradient-primary">
-          <h3 className="text-xl font-bold text-primary-foreground mb-2">Need Personalized Advice?</h3>
+          <h3 className="text-xl font-bold text-primary-foreground mb-2">🏃 Sports Training Appointments Available!</h3>
           <p className="text-primary-foreground/90 mb-4">
+            Want to get your pet into sports and athletic training? Book a sports training consultation 
+            with one of our specialized veterinarians who can assess your pet's fitness and create a personalized training plan.
+          </p>
+          <Button
+            variant="secondary"
+            onClick={() => navigate("/owner/dashboard")}
+          >
+            Book Sports Training
+          </Button>
+        </Card>
+
+        <Card className="mt-4 p-6 bg-card border-2 border-primary/20">
+          <h3 className="text-xl font-bold text-foreground mb-2">Need Personalized Advice?</h3>
+          <p className="text-muted-foreground mb-4">
             While these resources provide general information, every pet is unique. 
             Book a consultation with one of our veterinarians for personalized advice.
           </p>
           <Button
-            variant="secondary"
+            className="bg-gradient-secondary"
             onClick={() => navigate("/owner/dashboard")}
           >
             Book Appointment

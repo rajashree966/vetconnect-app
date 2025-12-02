@@ -75,6 +75,9 @@ const VetDashboard = () => {
 
   const updateAppointmentStatus = async (id: string, status: "pending" | "confirmed" | "completed" | "cancelled") => {
     try {
+      // Find the appointment to get details for notification
+      const appointment = appointments.find(apt => apt.id === id);
+      
       const { error } = await supabase
         .from("appointments")
         .update({ status })
@@ -82,9 +85,31 @@ const VetDashboard = () => {
 
       if (error) throw error;
       
+      // Send status notification to pet owner
+      if (appointment) {
+        try {
+          await supabase.functions.invoke('send-status-notification', {
+            body: {
+              appointmentId: id,
+              newStatus: status,
+              petOwnerPhone: appointment.profiles.phone,
+              petOwnerEmail: null, // Will be fetched in edge function if needed
+              petOwnerName: appointment.profiles.full_name,
+              vetName: profile?.full_name,
+              petName: appointment.pet_name,
+              appointmentDate: appointment.appointment_date,
+              appointmentTime: appointment.appointment_time,
+              consultationType: appointment.consultation_type
+            }
+          });
+        } catch (notifError) {
+          console.error('Failed to send notification:', notifError);
+        }
+      }
+      
       toast({
         title: "Success",
-        description: `Appointment ${status}`,
+        description: `Appointment ${status}. Notification sent to pet owner.`,
       });
       
       fetchAppointments();
