@@ -10,12 +10,14 @@ import NotFound from "./pages/NotFound";
 import VetLogin from "./pages/vet/VetLogin";
 import VetRegister from "./pages/vet/VetRegister";
 import VetForgotPassword from "./pages/vet/ForgotPassword";
+import VetResetPassword from "./pages/vet/ResetPassword";
 import VetDashboard from "./pages/vet/VetDashboard";
 import VetProfile from "./pages/vet/VetProfile";
 import ConsultationVideosVet from "./pages/vet/ConsultationVideos";
 import OwnerLogin from "./pages/owner/OwnerLogin";
 import OwnerRegister from "./pages/owner/OwnerRegister";
 import OwnerForgotPassword from "./pages/owner/ForgotPassword";
+import OwnerResetPassword from "./pages/owner/ResetPassword";
 import OwnerDashboard from "./pages/owner/OwnerDashboard";
 import OwnerProfile from "./pages/owner/OwnerProfile";
 import PetProfile from "./pages/owner/PetProfile";
@@ -45,6 +47,7 @@ const App = () => (
             <Route path="/vet/login" element={<VetLogin />} />
             <Route path="/vet/register" element={<VetRegister />} />
             <Route path="/vet/forgot-password" element={<VetForgotPassword />} />
+            <Route path="/vet/reset-password" element={<VetResetPassword />} />
             <Route path="/vet/dashboard" element={<VetDashboard />} />
             <Route path="/vet/profile" element={<VetProfile />} />
             <Route path="/vet/consultation-videos" element={<ConsultationVideosVet />} />
@@ -52,6 +55,7 @@ const App = () => (
             <Route path="/owner/login" element={<OwnerLogin />} />
             <Route path="/owner/register" element={<OwnerRegister />} />
             <Route path="/owner/forgot-password" element={<OwnerForgotPassword />} />
+            <Route path="/owner/reset-password" element={<OwnerResetPassword />} />
             <Route path="/owner/dashboard" element={<OwnerDashboard />} />
             <Route path="/owner/profile" element={<OwnerProfile />} />
             <Route path="/owner/pet-profile" element={<PetProfile />} />
