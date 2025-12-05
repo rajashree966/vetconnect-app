@@ -432,7 +432,47 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      vet_profiles_public: {
+        Row: {
+          available_days: string[] | null
+          available_hours_end: string | null
+          available_hours_start: string | null
+          clinic_address: string | null
+          clinic_name: string | null
+          id: string | null
+          specialization: string | null
+          years_of_experience: number | null
+        }
+        Insert: {
+          available_days?: string[] | null
+          available_hours_end?: string | null
+          available_hours_start?: string | null
+          clinic_address?: string | null
+          clinic_name?: string | null
+          id?: string | null
+          specialization?: string | null
+          years_of_experience?: number | null
+        }
+        Update: {
+          available_days?: string[] | null
+          available_hours_end?: string | null
+          available_hours_start?: string | null
+          clinic_address?: string | null
+          clinic_name?: string | null
+          id?: string | null
+          specialization?: string | null
+          years_of_experience?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "vet_profiles_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Functions: {
       [_ in never]: never
