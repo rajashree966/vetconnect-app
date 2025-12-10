@@ -7,6 +7,7 @@ import { Card } from "@/components/ui/card";
 import { Stethoscope, ArrowLeft, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import PasswordStrengthIndicator from "@/components/PasswordStrengthIndicator";
 
 const ResetPassword = () => {
   const [password, setPassword] = useState("");
@@ -114,6 +115,7 @@ const ResetPassword = () => {
                   required
                   minLength={6}
                 />
+                <PasswordStrengthIndicator password={password} />
               </div>
 
               <div className="space-y-2">
